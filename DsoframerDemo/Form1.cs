@@ -96,5 +96,22 @@ namespace DsoframerDemo
             //在表格中增加行   
             WordDoc.Content.Tables[1].Rows.Add(ref Nothing);
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Microsoft.Office.Interop.Word.Application objApp = new Microsoft.Office.Interop.Word.Application();
+            Document document = objApp.Documents.Open(Path.Combine(System.Windows.Forms.Application.StartupPath, "AppData", "sample1.docx"));
+
+            object missing = System.Reflection.Missing.Value;
+            object confirmConversion = false;
+            object link = false;
+            object attachment = false;
+            objApp.Selection.InsertFile(Path.Combine(System.Windows.Forms.Application.StartupPath, "AppData", "sample2.docx"), ref missing, ref confirmConversion, ref link, ref attachment);
+            object pBreak = (int)Microsoft.Office.Interop.Word.WdBreakType.wdSectionBreakNextPage;
+            objApp.Selection.InsertBreak(ref pBreak);
+
+            objApp.ActiveDocument.Save();
+            document.Close();
+        }
     }
 }
